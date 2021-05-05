@@ -94,3 +94,13 @@ action 接受参数，前面参数是 command 的定义值，然后才是 option
 ```js
 program.parse(process.argv);
 ```
+
+http://nodejs.cn/api/child_process.html#child_process_child_process_spawn_command_args_options
+
+https://www.npmjs.com/package/download-git-repo
+
+https://www.jb51.net/article/115967.htm
+
+https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md#%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%EF%BC%88%E5%AD%90%EF%BC%89%E5%91%BD%E4%BB%A4
+
+https://www.jb51.net/article/59287.htm
