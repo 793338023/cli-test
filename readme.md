@@ -35,25 +35,25 @@ unlink 是卸载当前项目上的软链接，因为我们需要先全局 link �
 
 ## 使用到的包
 
-[commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md) 完整的 node.js 命令行解决方案，这个包很重要，cli 的命令行编写就基于它了
+1. [commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md) 完整的 node.js 命令行解决方案，这个包很重要，cli 的命令行编写就基于它了
 
-clear 清除终端屏幕
+2. clear 清除终端屏幕
 
-chalk 终端字符串样式
+3. chalk 终端字符串样式
 
-cross-spawn spawn 跨平台解决方案，在 Windows 上使用 Spawn 会出现各种问题，所以使用 cross-spawn
+4. cross-spawn spawn 跨平台解决方案，在 Windows 上使用 Spawn 会出现各种问题，所以使用 cross-spawn
 
-[download-git-repo](https://www.npmjs.com/package/download-git-repo) 下载并提取一个 git 存储库（GitHub，GitLab，Bitbucket）。
+5. [download-git-repo](https://www.npmjs.com/package/download-git-repo) 下载并提取一个 git 存储库（GitHub，GitLab，Bitbucket）。
 
-Figlet 酷炫的文字工具，专门为终端打印好看的文字
+6. Figlet 酷炫的文字工具，专门为终端打印好看的文字
 
-ora 优雅的终端旋转器
+7. ora 优雅的终端旋转器
 
-watch 监视 node.js 中文件树的实用程序
+8. watch 监视 node.js 中文件树的实用程序
 
-[Handlebars](https://www.npmjs.com/package/handlebars) 模板引擎，专门使用来生成代码时使用的
+9. [Handlebars](https://www.npmjs.com/package/handlebars) 模板引擎，专门使用来生成代码时使用的
 
-[open](https://www.npmjs.com/package/open) 打开诸如 URL，文件，可执行文件之类的东西。跨平台
+10. [open](https://www.npmjs.com/package/open) 打开诸如 URL，文件，可执行文件之类的东西。跨平台
 
 ## 开始
 
@@ -95,12 +95,74 @@ action 接受参数，前面参数是 command 的定义值，然后才是 option
 program.parse(process.argv);
 ```
 
-http://nodejs.cn/api/child_process.html#child_process_child_process_spawn_command_args_options
+### spawn
 
-https://www.npmjs.com/package/download-git-repo
+[spawn](http://nodejs.cn/api/child_process.html#child_process_child_process_spawn_command_args_options)衍生子进程，
 
-https://www.jb51.net/article/115967.htm
+我们可以在子进程里执行 shell 脚本
 
-https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md#%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%EF%BC%88%E5%AD%90%EF%BC%89%E5%91%BD%E4%BB%A4
+如：
 
-https://www.jb51.net/article/59287.htm
+```js
+spawn("npm", ["install"], { cwd: `./${name}`, stdio: "inherit" });
+```
+
+cwd 是子进程的当前工作目录
+
+stdio 子进程的 stdio 配置，在父进程和子进程之间建立的管道
+
+默认是 pipe，如果想把子进程内容都输出，可以配置为 inherit，如上
+
+[具体可以看 stdio](http://nodejs.cn/api/child_process.html#child_process_options_stdio)
+
+执行 shell 文件，可以使用 execFile，如
+
+[例子](./lib/shell.js)
+
+```js
+const process = execFile(
+  "./aa.sh",
+  { cwd: path.resolve(__dirname, "../") },
+  (error, stdout, stderr) => {
+    console.log(error);
+    console.log("stdout:" + stdout);
+    console.error("stderr:", stderr);
+  }
+);
+```
+
+mac 报错：Error: spawn EACCES，没有权限，要给文件开启操作权限
+
+```
+chmod +x Users/zhang/code/cli-test/aa.sh
+
+chmod +x 文件地址
+```
+
+### [download-git-repo](download-git-repo)
+
+拉取 github 或 gitlab 代码
+
+```js
+download("github:793338023/cra-test", "cra-test", function (err) {
+  console.log(err ? "Error" : "Success");
+});
+```
+
+第一个参，需要 github:或 gitlab:开头，告诉去哪拉取，然后是项目名称而不是项目地址，在 GitHub 那每个标题就是
+第二个参，拉取下来文件夹名称
+
+## 资料
+
+[util.promisify](https://www.jb51.net/article/115967.htm)
+
+[commander](https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md#%E7%8B%AC%E7%AB%8B%E7%9A%84%E5%8F%AF%E6%89%A7%E8%A1%8C%EF%BC%88%E5%AD%90%EF%BC%89%E5%91%BD%E4%BB%A4)
+
+## 使用
+
+1. 拉取项目，使用`npm link`，然后执行下`zzc -h`，如果有帮助文档说明成功了
+2. 找个目录执行`zzc init demo`，会从 github 上拉取一个项目进行初始化看看效果，具体代码在`bin/index.js`
+
+3. 其他随便玩耍执行或者添加
+
+**具体代码可以看项目例子实现**
