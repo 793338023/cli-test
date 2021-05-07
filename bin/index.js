@@ -2,6 +2,7 @@
 const program = require("commander");
 const init = require("../lib/init");
 const shell = require("../lib/shell");
+const interactive = require("../lib/interactive");
 
 // 定义版本号
 program.version(require("../package").version);
@@ -30,6 +31,14 @@ program
   .option("-d, --debug", "显示debug")
   .action((name, abc, options, command) => {
     console.log(name, abc, options, command);
+  });
+
+// 子指令4
+program
+  .command("in")
+  .description("终端输入交互效果")
+  .action(() => {
+    interactive();
   });
 
 // 传入参数
