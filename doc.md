@@ -164,11 +164,17 @@ download("github:793338023/cra-test", "cra-test", function (err) {
 
 Inquirer在对于终端交互很有用，cli的编写更多是node使用，而且很多都有现成的工具包，善于利用工具，事半功倍
 
+[nodeJs 常用三方工具包](https://mp.weixin.qq.com/s/ALCik37l6wqQI3LJpuAQCQ)
+
+[实现 CLI 常用工具包 - 终端交互相关（问卷、彩色文字、loading、进度条）](https://mp.weixin.qq.com/s?__biz=MzI3ODU4MzQ1MA==&mid=2247490062&idx=1&sn=c2cd161993838fc66bd17082650b60bd&scene=21#wechat_redirect)
+
 ## 使用
 
 1. 拉取项目，使用`npm link`，然后执行下`zzc -h`，如果有帮助文档说明成功了
 2. 找个目录执行`zzc init demo`，会从 github 上拉取一个项目进行初始化看看效果，具体代码在`bin/index.js`
 
 3. 其他随便玩耍执行或者添加
+
+4. 卸载link，`npm rm --global zzc`
 
 **具体代码可以看项目例子实现**
